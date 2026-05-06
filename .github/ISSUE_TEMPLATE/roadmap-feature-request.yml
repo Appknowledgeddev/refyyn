@@ -1,0 +1,93 @@
+name: Roadmap Feature Request
+description: Suggest a product improvement for Refyyn's feedback board, roadmap, or changelog experience.
+title: "[Feature]: "
+labels:
+  - feature
+  - roadmap
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for suggesting an improvement for Refyyn.
+
+        Use this form for product ideas that should be considered for the public roadmap.
+  - type: input
+    id: summary
+    attributes:
+      label: Feature summary
+      description: A short, specific title for the request.
+      placeholder: Add board moderation tools for duplicate feedback
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem to solve
+      description: What user or admin problem is this feature trying to fix?
+      placeholder: |
+        Admins cannot merge duplicate requests today, so votes and comments get split across multiple feedback items.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+      description: Describe the behavior or workflow you would like to see.
+      placeholder: |
+        Add a merge action in the admin feedback detail view that lets an admin select a target request and move votes, comments, and reads into it.
+    validations:
+      required: true
+  - type: textarea
+    id: value
+    attributes:
+      label: Why this matters
+      description: Explain the benefit for admins, members, or both.
+      placeholder: |
+        This would keep the roadmap cleaner, preserve demand signals, and reduce admin cleanup time.
+    validations:
+      required: true
+  - type: checkboxes
+    id: areas
+    attributes:
+      label: Product areas
+      description: Select the parts of Refyyn this request touches.
+      options:
+        - label: Feedback board
+        - label: Public roadmap
+        - label: Changelog
+        - label: Admin dashboard
+        - label: Authentication or profiles
+        - label: Notifications or emails
+        - label: Integrations or API
+  - type: dropdown
+    id: audience
+    attributes:
+      label: Primary audience
+      description: Who benefits most from this request?
+      options:
+        - Admins
+        - End users / members
+        - Both equally
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Share any workarounds or other approaches you have considered.
+      placeholder: |
+        Current workaround: manually delete duplicates and ask users to re-vote on the surviving request.
+    validations:
+      required: false
+  - type: textarea
+    id: implementation_notes
+    attributes:
+      label: Implementation notes
+      description: Optional technical notes, references, or related files/routes.
+      placeholder: |
+        Possible touchpoints:
+        - resources/js/Pages/Admin/RequestDetail.vue
+        - app/Http/Controllers/AdminController/FeedbackController.php
+        - app/Models/Feedback.php
+    validations:
+      required: false

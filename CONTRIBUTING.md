@@ -20,6 +20,8 @@ We love feature suggestions! Please create an issue with:
 - Why it would be useful
 - Any implementation ideas you have
 
+If the suggestion belongs on the product roadmap, use the GitHub `Roadmap Feature Request` issue form so requests are easier to review and prioritize.
+
 ### Pull Requests
 
 1. **Fork the repository** and create your branch from `master`
