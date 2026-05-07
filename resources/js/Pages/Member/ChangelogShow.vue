@@ -29,15 +29,17 @@ const goBack = () => {
             <div class="max-w-7xl mx-auto flex items-center justify-between">
                 <!-- Logo -->
                 <div class="flex items-center gap-2">
-                    <div class="w-8 h-8 bg-gray-900 rounded-lg flex items-center justify-center text-white font-bold text-sm">
-                        R
-                    </div>
-                    <span class="text-xl font-semibold text-gray-900">Refyyn</span>
+                    <img
+                        src="https://s3-eu-west-1.amazonaws.com/assets.knack-eu.com/assets/61eab488405181001e2450ee/logos/asset42.png"
+                        alt="Birtha Feedback Request Logo"
+                        class="w-8 h-8 rounded-lg object-cover"
+                    />
+                    <span class="text-xl font-semibold text-gray-900">{{ $page.props.app.name || 'Birtha Feedback Request' }}</span>
                 </div>
 
                 <!-- Nav Links -->
                 <div class="flex items-center gap-8">
-                    <Link href="/requests" class="text-gray-500 font-medium hover:text-gray-900 transition-colors">Feedback</Link>
+                    <Link href="/feedback" class="text-gray-500 font-medium hover:text-gray-900 transition-colors">Feedback</Link>
                     <Link href="/roadmap" class="text-gray-500 font-medium hover:text-gray-900 transition-colors">Roadmap</Link>
                     <Link href="/changelog" class="text-gray-900 font-medium hover:text-gray-600 transition-colors">Changelog</Link>
                 </div>
