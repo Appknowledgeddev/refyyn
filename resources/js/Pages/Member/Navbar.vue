@@ -13,7 +13,7 @@ const isActive = (route) => page.url.startsWith(route)
 
 const navItemClasses = (active) => [
     'flex items-center gap-2 text-sm font-medium transition-colors',
-    active ? 'text-gray-900' : 'text-gray-500 hover:text-gray-900'
+    active ? 'text-slate-950' : 'text-slate-500 hover:text-slate-900'
 ]
 
 const handleUserClick = (event) => {
@@ -42,25 +42,30 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-    <nav class="border-b border-gray-200 px-6 py-4 flex-shrink-0">
-        <div class="max-w-7xl mx-auto flex items-center justify-between">
+    <nav class="bg-[#b2a23c] px-6 py-4 flex-shrink-0 shadow-sm">
+        <div class="max-w-7xl mx-auto flex items-center justify-between gap-6">
             <!-- Logo -->
-            <div class="flex items-center gap-2">
-                <img
-                    src="https://s3-eu-west-1.amazonaws.com/assets.knack-eu.com/assets/61eab488405181001e2450ee/logos/asset42.png"
-                    alt="Birtha Feedback Request Logo"
-                    class="w-8 h-8 rounded-lg object-cover"
-                >
-                <span class="text-xl font-semibold text-gray-900">{{ $page.props.app.name || 'Organization' }}</span>
+            <div class="flex items-center gap-3 min-w-0">
+                <div class="flex h-9 w-9 items-center justify-center rounded-full bg-white shadow-sm">
+                    <img
+                        src="https://s3-eu-west-1.amazonaws.com/assets.knack-eu.com/assets/61eab488405181001e2450ee/logos/asset42.png"
+                        alt="Birtha Feedback Request Logo"
+                        class="h-6 w-6 object-contain"
+                    >
+                </div>
+                <div class="leading-none text-white">
+                    <div class="text-lg font-bold tracking-tight">Birtha</div>
+                    <div class="text-lg font-bold tracking-tight">Feedback Request</div>
+                </div>
             </div>
 
             <!-- Nav Links -->
-            <div class="flex items-center gap-8">
+            <div class="hidden items-center gap-10 md:flex">
                 <Link
                     href="/feedback"
                     :class="navItemClasses(isActive('/feedback'))"
                 >
-                    <svg class="w-5 h-5" stroke-width="1.5">
+                    <svg class="w-4 h-4" stroke-width="1.5">
                         <use href="/images/icons.svg#inbox" />
                     </svg>
                     Feedback
@@ -69,7 +74,7 @@ onBeforeUnmount(() => {
                     href="/roadmap"
                     :class="navItemClasses(isActive('/roadmap'))"
                 >
-                    <svg class="w-5 h-5" stroke-width="1.5">
+                    <svg class="w-4 h-4" stroke-width="1.5">
                         <use href="/images/icons.svg#roadmap" />
                     </svg>
                     Roadmap
@@ -78,7 +83,7 @@ onBeforeUnmount(() => {
                     href="/changelog"
                     :class="navItemClasses(isActive('/changelog'))"
                 >
-                    <svg class="w-5 h-5" stroke-width="1.5">
+                    <svg class="w-4 h-4" stroke-width="1.5">
                         <use href="/images/icons.svg#changelog" />
                     </svg>
                     Changelog
@@ -89,13 +94,13 @@ onBeforeUnmount(() => {
             <div v-if="!$page.props.auth.user" class="flex items-center gap-3">
                 <button
                     @click="showAuthModal = true; authMode = 'login'"
-                    class="px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 transition-colors"
+                    class="px-4 py-2 text-sm font-medium text-white/80 hover:text-white transition-colors"
                 >
                     Log In
                 </button>
                 <button
                     @click="showAuthModal = true; authMode = 'signup'"
-                    class="px-4 py-2 text-sm font-medium text-gray-600 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
+                    class="rounded-xl bg-white px-4 py-2 text-sm font-medium text-[#6f6722] transition-colors hover:bg-[#f4efcf]"
                 >
                     Sign Up
                 </button>
@@ -104,9 +109,9 @@ onBeforeUnmount(() => {
                 <Link
                     v-if="$page.props.auth.user?.is_admin"
                     href="/admin/dashboard"
-                    class="flex items-center border border-gray-300 p-2 rounded-md hover:shadow-sm gap-2 text-sm font-medium text-gray-500 hover:text-gray-900 transition-colors"
+                    class="flex items-center gap-2 rounded-xl border border-white/40 bg-white/15 px-3 py-2 text-sm font-medium text-white transition-colors hover:bg-white/25"
                 >
-                    <svg class="w-5 h-5" stroke-width="1.5">
+                    <svg class="w-4 h-4" stroke-width="1.5">
                         <use href="/images/icons.svg#admin-view" />
                     </svg>
                     Dashboard

@@ -352,7 +352,7 @@ const truncateDescription = (text, maxLength = 120) => {
                     <button
                         type="submit"
                         :disabled="form.processing"
-                        class="flex-1 px-4 py-2 text-sm font-medium text-white bg-gray-900 rounded-lg hover:bg-gray-800 transition-colors disabled:opacity-50"
+                        class="flex-1 rounded-lg bg-[#b2a23c] px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-[#a29335] disabled:opacity-50"
                     >
                         {{ form.processing ? 'Submitting...' : 'Submit' }}
                     </button>

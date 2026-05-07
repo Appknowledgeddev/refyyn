@@ -138,79 +138,90 @@ const openFeedbackModal = () => {
     if (!requireAuth()) return
     showFeedbackModal.value = true
 }
+
+const currentBoardName = computed(() =>
+    selectedBoard.value
+        ? props.boards.find(b => b.id === selectedBoard.value)?.name
+        : 'All Requests'
+)
 </script>
 
 <template>
     <Head title="Feedback" />
 
     <MemberLayout>
-        <div class="max-w-7xl mx-auto flex gap-10 p-6">
+        <div class="mx-auto flex max-w-7xl gap-12 px-8 py-8">
             <!-- Left Sidebar -->
-            <aside class="w-64 flex-shrink-0 self-start bg-white">
-                <div class="px-4">
+            <aside class="w-64 flex-shrink-0 self-start">
+                <div class="space-y-7">
                     <!-- Submit Button -->
                     <button
                         @click="openFeedbackModal"
-                        class="w-full flex justify-center text-center gap-2 px-3 py-2 mt-2 text-sm font-medium text-white bg-gray-900 rounded-lg hover:scale-105 duration-200 mb-6"
+                        class="mt-2 flex w-full items-center justify-center gap-2 rounded-xl bg-[#b2a23c] px-4 py-3 text-sm font-medium text-white transition-transform duration-200 hover:-translate-y-0.5 hover:bg-[#a29335]"
                     >
-                        <svg class="w-5 h-5" stroke-width="1.5">
+                        <svg class="h-5 w-5" stroke-width="1.5">
                             <use href="/images/icons.svg#plus" />
                         </svg>
                         Submit Idea
                     </button>
 
                     <!-- Boards Section -->
-                    <h3 class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">BOARDS</h3>
-                    <div class="space-y-2">
+                    <div>
+                        <h3 class="mb-4 text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">Boards</h3>
+                        <div class="space-y-2">
                         <button
                             @click="selectedBoard = null"
                             :class="[
-                                'w-full flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg transition-colors group',
-                                !selectedBoard ? 'text-gray-900 bg-white border border-gray-200 shadow-sm' : 'text-gray-700 hover:bg-gray-100 border border-transparent'
+                                'group flex w-full items-center gap-3 rounded-xl border px-4 py-3 text-sm font-medium transition-colors',
+                                !selectedBoard ? 'border-slate-200 bg-white text-slate-900 shadow-sm' : 'border-transparent text-slate-700 hover:bg-slate-50'
                             ]"
                         >
                             <span
-                                class="w-2 h-2 rounded-full ring-2 group-hover:ring-4 ring-opacity-20 transition-all bg-black ring-black"
+                                class="h-2.5 w-2.5 rounded-full bg-black ring-4 ring-black/10 transition-all group-hover:ring-black/20"
                             ></span>
                             <span class="flex-1 text-left">All Requests</span>
-                            <span class="right text-xs text-gray-600">{{ feedbacks.length }}</span>
+                            <span class="text-xs text-slate-500">{{ feedbacks.length }}</span>
                         </button>
                         <button
                             v-for="board in boards"
                             :key="board.id"
                             @click="selectBoard(board.id)"
                             :class="[
-                                'w-full flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg transition-colors group',
-                                selectedBoard === board.id ? 'text-gray-900 bg-white border border-gray-200 shadow-sm' : 'text-gray-700 hover:bg-gray-100 border border-transparent'
+                                'group flex w-full items-center gap-3 rounded-xl border px-4 py-3 text-sm font-medium transition-colors',
+                                selectedBoard === board.id ? 'border-slate-200 bg-white text-slate-900 shadow-sm' : 'border-transparent text-slate-700 hover:bg-slate-50'
                             ]"
                         >
                             <span
-                                class="w-2 h-2 rounded-full ring-2 group-hover:ring-4 ring-opacity-20 transition-all"
+                                class="h-2.5 w-2.5 rounded-full ring-4 ring-opacity-10 transition-all group-hover:ring-opacity-20"
                                 :class="$boardColorClasses[board.color] || 'bg-gray-500 ring-gray-500'"
                             ></span>
                             <span class="flex-1 text-left">{{ board.name }}</span>
-                            <span class="right text-xs text-gray-600">{{ board.feedback_count }}</span>
+                            <span class="text-xs text-slate-500">{{ board.feedback_count }}</span>
                         </button>
                     </div>
+                </div>
                 </div>
             </aside>
 
             <!-- Main Content -->
             <main class="flex-1">
                 <!-- Header -->
-                <div class="mb-6">
-                    <div class="flex items-center justify-between mb-2">
-                        <h1 class="text-3xl font-bold text-gray-900">
-                            {{ selectedBoard ? boards.find(b => b.id === selectedBoard)?.name : 'All Requests' }}
-                        </h1>
+                <div class="mb-7">
+                    <div class="mb-2 flex items-start justify-between gap-6">
+                        <div>
+                            <h1 class="text-5xl font-semibold tracking-tight text-slate-900">
+                                {{ currentBoardName }}
+                            </h1>
+                            <p class="mt-3 text-lg text-slate-500">Vote on existing requests or suggest a new feature.</p>
+                        </div>
                         <div class="flex items-center gap-3">
-                            <div class="relative">
+                            <div class="relative min-w-[230px]">
                                 <input
                                     v-model="searchQuery"
                                     type="text"
                                     placeholder="Search posts..."
-                                    class="h-9 pl-10 pr-4 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent">
-                                <svg class="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" stroke-width="2">
+                                    class="h-11 w-full rounded-xl border border-slate-200 bg-white pl-10 pr-4 text-sm text-slate-700 shadow-sm outline-none transition focus:border-slate-300 focus:ring-2 focus:ring-slate-200">
+                                <svg class="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" stroke-width="2">
                                     <use href="/images/icons.svg#search" />
                                 </svg>
                             </div>
@@ -219,8 +230,9 @@ const openFeedbackModal = () => {
                             <div class="relative">
                                 <button
                                     @click="showStatusDropdown = !showStatusDropdown"
-                                    class="h-9 w-9 flex items-center justify-center border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"                                >
-                                    <svg class="w-5 h-5 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    class="flex h-11 w-11 items-center justify-center rounded-xl border border-slate-200 bg-white shadow-sm transition-colors hover:bg-slate-50"
+                                >
+                                    <svg class="h-5 w-5 text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/>
                                     </svg>
                                 </button>
@@ -228,7 +240,7 @@ const openFeedbackModal = () => {
                                 <!-- Dropdown Menu -->
                                 <div
                                     v-if="showStatusDropdown"
-                                    class="absolute top-full right-0 mt-1 w-56 bg-white border border-gray-200 rounded-lg shadow-lg z-30"
+                                    class="absolute right-0 top-full z-30 mt-2 w-56 rounded-xl border border-slate-200 bg-white shadow-lg"
                                 >
                                     <div class="p-2">
                                         <button
@@ -236,14 +248,14 @@ const openFeedbackModal = () => {
                                             :key="status.id"
                                             @click="toggleStatus(status.id)"
                                             :class="[
-                                                'w-full flex items-center gap-2 px-3 py-2 text-sm rounded-md transition-colors',
-                                                isStatusSelected(status.id) ? 'bg-gray-100' : 'hover:bg-gray-50'
+                                                'flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm transition-colors',
+                                                isStatusSelected(status.id) ? 'bg-slate-100' : 'hover:bg-slate-50'
                                             ]"
                                         >
                                             <span
                                                 :class="[
-                                                    'w-4 h-4 rounded border-2 flex items-center justify-center',
-                                                    isStatusSelected(status.id) ? 'bg-gray-900 border-gray-900' : 'border-gray-300'
+                                                    'flex h-4 w-4 items-center justify-center rounded border-2',
+                                                    isStatusSelected(status.id) ? 'border-slate-900 bg-slate-900' : 'border-slate-300'
                                                 ]"
                                             >
                                                 <svg v-if="isStatusSelected(status.id)" class="w-2.5 h-2.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -251,13 +263,13 @@ const openFeedbackModal = () => {
                                                 </svg>
                                             </span>
                                             <span class="w-2 h-2 rounded-full" :class="$statusDotColors[status.color]"></span>
-                                            <span class="text-gray-700">{{ status.name }}</span>
+                                            <span class="text-slate-700">{{ status.name }}</span>
                                         </button>
                                     </div>
-                                    <div v-if="selectedStatuses.length > 0" class="border-t border-gray-100 p-2">
+                                    <div v-if="selectedStatuses.length > 0" class="border-t border-slate-100 p-2">
                                         <button
                                             @click="selectedStatuses = []; showStatusDropdown = false"
-                                            class="w-full text-center text-sm text-gray-500 hover:text-gray-700 py-1"
+                                            class="w-full py-1 text-center text-sm text-slate-500 hover:text-slate-700"
                                         >
                                             Clear all
                                         </button>
@@ -269,12 +281,12 @@ const openFeedbackModal = () => {
                             </div>
 
                             <!-- Sort Buttons -->
-                            <div class="flex items-center gap-1 p-1 border border-gray-200 rounded-lg">
+                            <div class="flex items-center gap-1 rounded-xl border border-slate-200 bg-white p-1 shadow-sm">
                                 <button
                                     @click="sortBy = 'latest'"
                                     :class="[
-                                        'px-3 py-1 text-sm font-medium rounded-md transition-colors',
-                                        sortBy === 'latest' ? 'bg-gray-800 text-white' : 'text-gray-500 hover:text-gray-700 hover:bg-gray-100'
+                                        'rounded-lg px-4 py-2 text-sm font-medium transition-colors',
+                                        sortBy === 'latest' ? 'bg-[#b2a23c] text-white' : 'text-slate-500 hover:bg-[#f4efcf] hover:text-[#6f6722]'
                                     ]"
                                 >
                                     Latest
@@ -282,8 +294,8 @@ const openFeedbackModal = () => {
                                 <button
                                     @click="sortBy = 'votes'"
                                     :class="[
-                                        'px-3 py-1 text-sm font-medium rounded-md transition-colors',
-                                        sortBy === 'votes' ? 'bg-gray-800 text-white' : 'text-gray-500 hover:text-gray-700 hover:bg-gray-100'
+                                        'rounded-lg px-4 py-2 text-sm font-medium transition-colors',
+                                        sortBy === 'votes' ? 'bg-[#b2a23c] text-white' : 'text-slate-500 hover:bg-[#f4efcf] hover:text-[#6f6722]'
                                     ]"
                                 >
                                     Upvoted
@@ -291,7 +303,6 @@ const openFeedbackModal = () => {
                             </div>
                         </div>
                     </div>
-                    <p class="text-sm text-gray-500">Vote on existing requests or suggest a new feature.</p>
                 </div>
 
                 <!-- Feedback List -->
@@ -300,55 +311,59 @@ const openFeedbackModal = () => {
                         v-for="feedback in filteredFeedbacks"
                         :key="feedback.id"
                         @click="router.visit(`/feedback/${feedback.slug}`)"
-                        class="flex gap-4 p-4 border border-gray-200 rounded-lg hover:border-gray-300 hover:shadow-sm transition-all cursor-pointer bg-white"
+                        class="cursor-pointer rounded-2xl border border-slate-200 bg-white px-4 py-4 shadow-sm transition-all hover:border-slate-300 hover:shadow-md"
                     >
-                        <div class="flex flex-col items-center gap-1 self-center">
-                            <button
-                                @click.stop="toggleVote(feedback.id)"
-                                :class="[
-                                    'w-10 h-10 rounded-lg border-2 flex items-center justify-center transition-all',
-                                    isUpvoted(feedback.id) ? 'bg-gray-900 border-gray-900' : 'bg-white border-gray-200 hover:border-gray-300'
-                                ]"
-                            >
-                                <svg class="w-6 h-6 transition-colors" :class="isUpvoted(feedback.id) ? 'text-white' : 'text-gray-600'" stroke-width="1.5">
-                                    <use href="/images/icons.svg#upvote" />
-                                </svg>
-                            </button>
-                            <span class="text-sm font-semibold text-gray-700">{{ getUpvoteCount(feedback.id) }}</span>
-                        </div>
-                        <div class="flex-1">
-                            <div class="flex justify-between items-start">
-                                <h3 class="text-lg font-semibold text-gray-900 mb-1">{{ feedback.title }}</h3>
+                        <div class="flex gap-4">
+                            <div class="flex w-12 flex-shrink-0 flex-col items-center gap-1 pt-1">
+                                <button
+                                    @click.stop="toggleVote(feedback.id)"
+                                    :class="[
+                                        'flex h-10 w-10 items-center justify-center rounded-xl border transition-all',
+                                        isUpvoted(feedback.id) ? 'border-[#b2a23c] bg-[#b2a23c]' : 'border-slate-200 bg-white hover:border-[#cbbb5a]'
+                                    ]"
+                                >
+                                    <svg class="h-5 w-5 transition-colors" :class="isUpvoted(feedback.id) ? 'text-white' : 'text-slate-600'" stroke-width="1.5">
+                                        <use href="/images/icons.svg#upvote" />
+                                    </svg>
+                                </button>
+                                <span class="text-xl font-semibold leading-none text-slate-700">{{ getUpvoteCount(feedback.id) }}</span>
+                            </div>
+                            <div class="min-w-0 flex-1">
+                                <div class="flex items-start justify-between gap-4">
+                                    <div class="min-w-0">
+                                        <h3 class="mb-1 text-2xl font-semibold tracking-tight text-slate-900">{{ feedback.title }}</h3>
+                                        <p class="mb-4 text-base text-slate-600">{{ shortenDescription(feedback.description, 170) }}</p>
+                                    </div>
                                 <span
                                     v-if="feedback.status"
-                                    :class="['inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium rounded-md border-[0.25px]', $statusClasses[feedback.status.color]]"
+                                    :class="['inline-flex flex-shrink-0 items-center gap-1.5 rounded-xl px-3 py-1.5 text-xs font-medium border-[0.25px]', $statusClasses[feedback.status.color]]"
                                 >
                                     <span class="w-1.5 h-1.5 bg-current rounded-full"></span>
                                     {{ feedback.status.name }}
                                 </span>
-                            </div>
-                            <p class="text-sm text-gray-600 mb-3">{{ shortenDescription(feedback.description) }}</p>
-                            <div class="flex items-center gap-5 text-xs text-gray-500">
-                                <div class="flex items-center gap-1">
-                                    <svg class="w-5 h-5" stroke-width="1.5">
-                                        <use href="/images/icons.svg#comment" />
-                                    </svg>
-                                    <span>{{ feedback.comments_count }}</span>
                                 </div>
-                                <div class="flex items-center gap-1.5">
-                                    <img
-                                        :src="feedback.author?.avatar || 'https://xsgames.co/randomusers/assets/avatars/male/23.jpg'"
-                                        :alt="feedback.author?.name"
-                                        class="w-5 h-5 rounded-full"
-                                    >
-                                    <span>{{ feedback.author?.name }}</span>
+                                <div class="flex items-center gap-5 text-sm text-slate-500">
+                                    <div class="flex items-center gap-1.5">
+                                        <svg class="h-4 w-4" stroke-width="1.5">
+                                            <use href="/images/icons.svg#comment" />
+                                        </svg>
+                                        <span>{{ feedback.comments_count }}</span>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <img
+                                            :src="feedback.author?.avatar || 'https://xsgames.co/randomusers/assets/avatars/male/23.jpg'"
+                                            :alt="feedback.author?.name"
+                                            class="h-6 w-6 rounded-full border border-slate-200"
+                                        >
+                                        <span>{{ feedback.author?.name }}</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
                     <!-- Empty State -->
-                    <div v-if="filteredFeedbacks.length === 0" class="text-center py-12">
+                    <div v-if="filteredFeedbacks.length === 0" class="py-16 text-center">
                         <svg class="w-16 h-16 text-gray-300 mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"/>
                         </svg>
