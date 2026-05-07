@@ -45,18 +45,12 @@ onBeforeUnmount(() => {
     <nav class="bg-[#b2a23c] px-6 py-4 flex-shrink-0 shadow-sm">
         <div class="max-w-7xl mx-auto flex items-center justify-between gap-6">
             <!-- Logo -->
-            <div class="flex items-center gap-3 min-w-0">
-                <div class="flex h-9 w-9 items-center justify-center rounded-full bg-white shadow-sm">
-                    <img
-                        src="https://s3-eu-west-1.amazonaws.com/assets.knack-eu.com/assets/61eab488405181001e2450ee/logos/asset42.png"
-                        alt="Birtha Feedback Request Logo"
-                        class="h-6 w-6 object-contain"
-                    >
-                </div>
-                <div class="leading-none text-white">
-                    <div class="text-lg font-bold tracking-tight">Birtha</div>
-                    <div class="text-lg font-bold tracking-tight">Feedback Request</div>
-                </div>
+            <div class="flex items-center min-w-0">
+                <img
+                    src="https://s3-eu-west-1.amazonaws.com/assets.knack-eu.com/assets/61eab488405181001e2450ee/logos/asset42.png"
+                    alt="Birtha Feedback Request Logo"
+                    class="h-14 w-auto object-contain"
+                >
             </div>
 
             <!-- Nav Links -->

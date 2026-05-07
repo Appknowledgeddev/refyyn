@@ -28,13 +28,12 @@ const goBack = () => {
         <nav class="border-b border-gray-200 px-6 py-4">
             <div class="max-w-7xl mx-auto flex items-center justify-between">
                 <!-- Logo -->
-                <div class="flex items-center gap-2">
+                <div class="flex items-center">
                     <img
                         src="https://s3-eu-west-1.amazonaws.com/assets.knack-eu.com/assets/61eab488405181001e2450ee/logos/asset42.png"
                         alt="Birtha Feedback Request Logo"
-                        class="w-8 h-8 rounded-lg object-cover"
+                        class="h-12 w-auto object-contain"
                     />
-                    <span class="text-xl font-semibold text-gray-900">{{ $page.props.app.name || 'Birtha Feedback Request' }}</span>
                 </div>
 
                 <!-- Nav Links -->
